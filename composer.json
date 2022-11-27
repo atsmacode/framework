@@ -11,7 +11,7 @@
     "autoload": {
         "psr-4": {
             "Atsmacode\\Orm\\": "app/",
-            "Atsmacode\\Orm\\Database\\Migrations\\": "database/migrations/",
+            "Atsmacode\\Orm\\Database\\Migrations\\": "database/migrations/"
         }
     },
     "autoload-dev": {
