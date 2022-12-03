@@ -10,16 +10,19 @@
     ],
     "autoload": {
         "psr-4": {
-            "Atsmacode\\Orm\\": "app/",
-            "Atsmacode\\Orm\\Database\\Migrations\\": "database/migrations/"
+            "Atsmacode\\Database\\": "app/",
+            "Atsmacode\\Database\\Migrations\\": "database/migrations/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Atsmacode\\Orm\\Tests\\": "tests/"
+            "Atsmacode\\Database\\Tests\\": "tests/"
         }
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
+    },
+    "require": {
+        "doctrine/dbal": "^3.5"
     }
 }

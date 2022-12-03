@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Orm\Classes;
+namespace Atsmacode\Database\Pdo;
 
-use Atsmacode\Orm\Traits\Connect;
+use Atsmacode\Database\Traits\Connect;
 use PDO;
 
 class Database

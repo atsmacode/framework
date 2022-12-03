@@ -1,6 +1,6 @@
 <?php
 
-namespace Atsmacode\Orm\Classes;
+namespace Atsmacode\Database\Collection;
 
 trait Collection
 {

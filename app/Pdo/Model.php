@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Orm\Classes;
+namespace Atsmacode\Database\Pdo;
 
-use Atsmacode\Orm\Classes\Database;
+use Atsmacode\Database\Pdo\Database;
 use PDO;
 use PDOException;
 

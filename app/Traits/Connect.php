@@ -1,6 +1,6 @@
 <?php
 
-namespace Atsmacode\Orm\Traits;
+namespace Atsmacode\Database\Traits;
 
 trait Connect
 {

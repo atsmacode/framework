@@ -1,33 +1,22 @@
 <?php
 
-namespace Atsmacode\Orm\Database\Migrations;
+namespace Atsmacode\Database\Migrations;
 
-use Atsmacode\Orm\Traits\Connect;
-use PDO;
-use PDOException;
-
-class CreateDatabase
+use Atsmacode\Database\Dbal\Database;
+class CreateDatabase extends Database
 {
-    use Connect;
-
     public static array $methods = [
         'dropDatabase',
         'createDatabase'
     ];
-
-    public function __construct()
-    {
-        $this->setCredentials();
-    }
 
     public function dropDatabase()
     {
         $sql = "DROP DATABASE IF EXISTS `{$this->database}`";
 
         try {
-            $this->connection = new PDO("mysql:host=$this->servername;", $this->username, $this->password);
             $this->connection->exec($sql);
-        } catch(PDOException $e) {
+        } catch(\Exception $e) {
             error_log($e->getMessage());
         }
 
@@ -39,9 +28,8 @@ class CreateDatabase
         $sql = "CREATE DATABASE `{$this->database}`";
 
         try {
-            $this->connection = new PDO("mysql:host=$this->servername;", $this->username, $this->password);
             $this->connection->exec($sql);
-        } catch(PDOException $e) {
+        } catch(\Exception $e) {
             error_log($e->getMessage());
         }
 
