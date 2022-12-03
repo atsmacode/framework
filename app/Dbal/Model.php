@@ -7,12 +7,14 @@ use Atsmacode\Database\Dbal\Database;
 class Model extends Database
 {
     protected $table;
-    public $content = [];
-    public $data;
+    public    $content = [];
+    public    $data;
+    private   $configProvider;
 
     public function __construct(array $data = null)
     {
-        parent::__construct();
+        parent::__construct($this->configProvider);
+        
         $this->data = $data;
     }
 

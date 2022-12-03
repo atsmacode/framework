@@ -2,7 +2,7 @@
 
 namespace Atsmacode\Database\Migrations;
 
-use Atsmacode\Database\Dbal\Database;
+use Atsmacode\Database\Pdo\Database;
 class CreateDatabase extends Database
 {
     public static array $methods = [

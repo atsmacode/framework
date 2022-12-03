@@ -6,6 +6,9 @@ use Atsmacode\Database\Pdo\Database;
 use PDO;
 use PDOException;
 
+/**
+ * Old model class based on PDO.
+ */
 class Model extends Database
 {
     protected $table;

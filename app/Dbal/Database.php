@@ -2,26 +2,27 @@
 
 namespace Atsmacode\Database\Dbal;
 
+use Atsmacode\Database\ConfigProvider;
 use Doctrine\DBAL\DriverManager;
 
 class Database
 {
-    public function __construct()
+    protected string $database;
+
+    public function __construct(ConfigProvider $configProvider)
     {
-        $dbConfig = 'config/db_database.php';
+        $config = $configProvider->get();
+        $env    = 'live';
 
-        if (isset($GLOBALS['dev'])) {
-            $dbConfig = 'config/db_database_test.php';
-        }
+        if (isset($GLOBALS['dev'])) { $env = 'test'; }
 
-        $dbConfig = require($GLOBALS['THE_ROOT'] . $dbConfig);
-
-        $this->connection = DriverManager::getConnection(([
-            'dbname'   => $dbConfig['database'],
-            'user'     => $dbConfig['username'],
-            'password' => $dbConfig['password'],
-            'host'     => $dbConfig['servername'],
-            'driver'   => $dbConfig['driver'],
-        ]));
+        $this->database   = $config['db'][$env]['database'];
+        $this->connection = DriverManager::getConnection([
+            'dbname'   => $config['db'][$env]['database'],
+            'user'     => $config['db'][$env]['username'],
+            'password' => $config['db'][$env]['password'],
+            'host'     => $config['db'][$env]['servername'],
+            'driver'   => $config['db'][$env]['driver'],
+        ]);
     }
 }

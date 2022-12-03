@@ -2,29 +2,27 @@
 
 namespace Atsmacode\Database\Pdo;
 
-use Atsmacode\Database\Traits\Connect;
+use Atsmacode\Database\ConfigProvider;
 use PDO;
 
+/**
+ * This class is only used to easily create databases.
+ */
 class Database
 {
-    use Connect;
-
-    public function __construct()
+    public function __construct(ConfigProvider $configProvider)
     {
-        $this->setCredentials();
+        $config = $configProvider->get();
+        $env    = 'live';
 
-        /*
-         * https://www.php.net/manual/en/pdo.connections.php
-         * PDO::ATTR_PERSISTENT must be set to use persistent connections.
-         * If unset, test suite will fail with too many connections.
-         */
+        if (isset($GLOBALS['dev'])) { $env = 'test'; }
+
+        $this->database   = $config['db'][$env]['database'];
         $this->connection = new PDO(
-            "mysql:host=$this->servername;dbname=$this->database",
-            $this->username,
-            $this->password,
-            array(
-            PDO::ATTR_PERSISTENT => true
-        ));
+            'mysql:host=' . $config['db'][$env]['servername'],
+            $config['db'][$env]['username'],
+            $config['db'][$env]['password']
+        );
 
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
