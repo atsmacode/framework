@@ -1,10 +1,10 @@
 <?php
 
-namespace Atsmacode\Database\Console\Commands;
+namespace Atsmacode\Framework\Console\Commands;
 
-use Atsmacode\Database\ConfigProvider;
-use Atsmacode\Database\Migrations\CreateTestTable;
-use Atsmacode\Database\Migrations\CreateDatabase;
+use Atsmacode\Framework\ConfigProvider;
+use Atsmacode\Framework\Migrations\CreateTestTable;
+use Atsmacode\Framework\Migrations\CreateDatabase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

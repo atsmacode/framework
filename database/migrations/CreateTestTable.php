@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Database\Migrations;
+namespace Atsmacode\Framework\Migrations;
 
-use Atsmacode\Database\Dbal\Database;
+use Atsmacode\Framework\Dbal\Database;
 
 class CreateTestTable extends Database
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Atsmacode\Database;
+namespace Atsmacode\Framework;
 
 abstract class ConfigProvider
 {

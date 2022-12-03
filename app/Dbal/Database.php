@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Database\Dbal;
+namespace Atsmacode\Framework\Dbal;
 
-use Atsmacode\Database\ConfigProvider;
+use Atsmacode\Framework\ConfigProvider;
 use Doctrine\DBAL\DriverManager;
 
 class Database

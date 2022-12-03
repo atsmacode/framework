@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Database\Pdo;
+namespace Atsmacode\Framework\Pdo;
 
-use Atsmacode\Database\ConfigProvider;
+use Atsmacode\Framework\ConfigProvider;
 use PDO;
 
 /**

@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Database;
+namespace Atsmacode\Framework;
 
-use Atsmacode\Database\ConfigProvider;
+use Atsmacode\Framework\ConfigProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 
 class DbConfigProvider extends ConfigProvider

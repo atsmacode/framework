@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Database\Dbal;
+namespace Atsmacode\Framework\Dbal;
 
-use Atsmacode\Database\Dbal\Database;
+use Atsmacode\Framework\Dbal\Database;
 
 class Model extends Database
 {

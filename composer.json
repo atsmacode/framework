@@ -1,6 +1,6 @@
 {
-    "name": "atsmacode/orm",
-    "description": "Object Relational Mapping",
+    "name": "atsmacode/framework",
+    "description": "Repo with base DB, Model and Config resources",
     "type": "project",
     "authors": [
         {
@@ -10,13 +10,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Atsmacode\\Database\\": "app/",
-            "Atsmacode\\Database\\Migrations\\": "database/migrations/"
+            "Atsmacode\\Framework\\": "app/",
+            "Atsmacode\\Framework\\Migrations\\": "database/migrations/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Atsmacode\\Database\\Tests\\": "tests/"
+            "Atsmacode\\Framework\\Tests\\": "tests/"
         }
     },
     "require-dev": {

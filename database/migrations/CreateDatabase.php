@@ -1,8 +1,8 @@
 <?php
 
-namespace Atsmacode\Database\Migrations;
+namespace Atsmacode\Framework\Migrations;
 
-use Atsmacode\Database\Pdo\Database;
+use Atsmacode\Framework\Pdo\Database;
 class CreateDatabase extends Database
 {
     public static array $methods = [
