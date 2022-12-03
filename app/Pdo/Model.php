@@ -17,7 +17,7 @@ class Model extends Database
 
     public function __construct(array $data = null)
     {
-        parent::__construct();
+        parent::__construct($this->configProvider);
         $this->data = $data;
     }
 
