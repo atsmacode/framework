@@ -11,10 +11,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
 #[AsCommand(
-    name: 'app:build-database',
+    name: 'app:build-framework',
     description: 'Populate the DB with all resources',
     hidden: false,
-    aliases: ['app:build-database']
+    aliases: ['app:build-framework']
 )]
 
 class BuildEnvironment extends Command
@@ -24,7 +24,7 @@ class BuildEnvironment extends Command
         CreateTestTable::class
     ];
 
-    protected static $defaultName = 'app:build-database';
+    protected static $defaultName = 'app:build-framework';
 
     public function __construct(string $name = null, ConfigProvider $configProvider)
     {

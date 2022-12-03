@@ -4,6 +4,6 @@ return [
     'servername' => 'localhost',
     'username'   => 'root',
     'password'   => 'PASSWORD',
-    'database'   => 'atsma_database',
+    'database'   => 'framework',
     'driver'     => 'pdo_mysql',
 ];

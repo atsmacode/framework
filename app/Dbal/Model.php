@@ -2,6 +2,7 @@
 
 namespace Atsmacode\Framework\Dbal;
 
+use Atsmacode\Framework\ConfigProvider;
 use Atsmacode\Framework\Dbal\Database;
 
 class Model extends Database
@@ -9,14 +10,7 @@ class Model extends Database
     protected $table;
     public    $content = [];
     public    $data;
-    private   $configProvider;
-
-    public function __construct(array $data = null)
-    {
-        parent::__construct($this->configProvider);
-        
-        $this->data = $data;
-    }
+    protected ConfigProvider $configProvider;
 
     public static function find(array $data = null)
     {

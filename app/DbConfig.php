@@ -6,8 +6,8 @@ class DbConfig
 {
     public function __invoke()
     {
-        $dbTest = require($GLOBALS['THE_ROOT'] . 'config/db_database_test.php');
-        $db     = require($GLOBALS['THE_ROOT'] . 'config/db_database.php');
+        $dbTest = require($GLOBALS['THE_ROOT'] . 'config/db_framework_test.php');
+        $db     = require($GLOBALS['THE_ROOT'] . 'config/db_framework.php');
 
         $dbConfig = [
             'db' => [
