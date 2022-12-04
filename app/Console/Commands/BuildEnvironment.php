@@ -3,6 +3,7 @@
 namespace Atsmacode\Framework\Console\Commands;
 
 use Atsmacode\Framework\ConfigProvider;
+use Atsmacode\Framework\DatabaseProvider;
 use Atsmacode\Framework\DbConfigProvider;
 use Atsmacode\Framework\Migrations\CreateTestTable;
 use Atsmacode\Framework\Migrations\CreateDatabase;
@@ -48,18 +49,12 @@ class BuildEnvironment extends Command
         $GLOBALS['THE_ROOT'] = '';
         $dev                 = $input->getOption('-d') === 'true' ?: false;
         $GLOBALS['dev']      = $dev ? $dev : null;
-        $config              = (new DbConfigProvider)->get();
+        $config              = $this->configProvider->get();
         $env                 = 'live';
 
         if (isset($GLOBALS['dev'])) { $env = 'test'; }
 
-        $GLOBALS['connection'] = DriverManager::getConnection([
-            'dbname'   => $config['db'][$env]['database'],
-            'user'     => $config['db'][$env]['username'],
-            'password' => $config['db'][$env]['password'],
-            'host'     => $config['db'][$env]['servername'],
-            'driver'   => $config['db'][$env]['driver'],
-        ]);
+        $GLOBALS['connection'] = DatabaseProvider::getConnection($config, $env);
 
         foreach($this->buildClasses as $class){
             foreach($class::$methods as $method){
