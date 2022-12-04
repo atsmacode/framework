@@ -3,8 +3,10 @@
 namespace Atsmacode\Framework\Console\Commands;
 
 use Atsmacode\Framework\ConfigProvider;
+use Atsmacode\Framework\DbConfigProvider;
 use Atsmacode\Framework\Migrations\CreateTestTable;
 use Atsmacode\Framework\Migrations\CreateDatabase;
+use Doctrine\DBAL\DriverManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -41,11 +43,23 @@ class BuildEnvironment extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $GLOBALS['THE_ROOT'] = '';
-        
         unset($GLOBALS['dev']);
-        $dev    = $input->getOption('-d') === 'true' ?: false;
-        $GLOBALS['dev'] = $dev ? $dev : null; 
+
+        $GLOBALS['THE_ROOT'] = '';
+        $dev                 = $input->getOption('-d') === 'true' ?: false;
+        $GLOBALS['dev']      = $dev ? $dev : null;
+        $config              = (new DbConfigProvider)->get();
+        $env                 = 'live';
+
+        if (isset($GLOBALS['dev'])) { $env = 'test'; }
+
+        $GLOBALS['connection'] = DriverManager::getConnection([
+            'dbname'   => $config['db'][$env]['database'],
+            'user'     => $config['db'][$env]['username'],
+            'password' => $config['db'][$env]['password'],
+            'host'     => $config['db'][$env]['servername'],
+            'driver'   => $config['db'][$env]['driver'],
+        ]);
 
         foreach($this->buildClasses as $class){
             foreach($class::$methods as $method){
