@@ -3,9 +3,9 @@
 namespace Atsmacode\Framework\Models;
 
 use Atsmacode\Framework\Collection\Collection;
-use Atsmacode\Framework\Models\FrameworkModel;
+use Atsmacode\Framework\Dbal\Model;
 
-class Test extends FrameworkModel
+class Test extends Model
 {
     use Collection;
 

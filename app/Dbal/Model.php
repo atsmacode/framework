@@ -2,24 +2,22 @@
 
 namespace Atsmacode\Framework\Dbal;
 
-use Atsmacode\Framework\ConfigProvider;
-use Atsmacode\Framework\Dbal\Database;
+use Atsmacode\Framework\Database\Database;
 
-class Model extends Database
+abstract class Model extends Database
 {
     protected $table;
     public    $content = [];
     public    $data;
-    protected ConfigProvider $configProvider;
 
-    public static function find(array $data = null)
+    public function find(array $data = null)
     {
-        return (new static($data))->getSelected($data);
+        return $this->getSelected($data);
     }
 
-    public static function create(array $data = null)
+    public function create(array $data = null)
     {
-        return (new static($data))->createEntry($data);
+        return $this->createEntry($data);
     }
 
     public function contains(array $data)

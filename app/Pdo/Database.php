@@ -6,7 +6,7 @@ use Atsmacode\Framework\ConfigProvider;
 use PDO;
 
 /**
- * This class is only used to easily create databases.
+ * This is a legacy class, can be removed after PKR9.
  */
 class Database
 {

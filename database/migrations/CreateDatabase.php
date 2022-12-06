@@ -2,7 +2,8 @@
 
 namespace Atsmacode\Framework\Migrations;
 
-use Atsmacode\Framework\Pdo\Database;
+use Atsmacode\Framework\Database\Database;
+
 class CreateDatabase extends Database
 {
     public static array $methods = [
@@ -12,6 +13,7 @@ class CreateDatabase extends Database
 
     public function dropDatabase()
     {
+        var_dump('ccc' .$this->database);
         $sql = "DROP DATABASE IF EXISTS `{$this->database}`";
 
         try {

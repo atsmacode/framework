@@ -8,7 +8,7 @@ class FrameworkConfig
 
     public function __invoke()
     {
-        $config = require($GLOBALS['THE_ROOT'] . FrameworkConfig::CONFIG_REF);
+        $config = require(FrameworkConfig::CONFIG_REF);
 
         return $config['framework'];
     }

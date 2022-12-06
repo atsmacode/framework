@@ -2,7 +2,7 @@
 
 namespace Atsmacode\Framework\Migrations;
 
-use Atsmacode\Framework\Dbal\Database;
+use Atsmacode\Framework\Database\Database;
 
 class CreateTestTable extends Database
 {

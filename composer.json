@@ -25,6 +25,7 @@
     "require": {
         "doctrine/dbal": "^3.5",
         "laminas/laminas-config-aggregator": "^1.12",
-        "symfony/console": "^6.2"
+        "symfony/console": "^6.0",
+        "laminas/laminas-servicemanager": "^3.19"
     }
 }
