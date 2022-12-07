@@ -12,20 +12,33 @@ abstract class Model extends Database
 
     public function find(array $data = null)
     {
-        return $this->getSelected($data);
+        $rows       = null;
+        $properties = $this->compileWhereStatement($data);
+
+        try {
+            $stmt = $this->connection->prepare("
+                SELECT * FROM {$this->table}
+                {$properties}
+            ");
+
+            $results = $stmt->executeQuery();
+            $rows    = $results->fetchAllAssociative();
+        } catch(\Exception $e) {
+            error_log(__METHOD__ . ': ' . $e->getMessage());
+        }
+
+        if(!$rows){
+            return $this;
+        }
+
+        $this->content = $rows;
+
+        $this->setModelProperties($rows);
+
+        return $this;
     }
 
     public function create(array $data = null)
-    {
-        return $this->createEntry($data);
-    }
-
-    public function contains(array $data)
-    {
-        return in_array($data, $this->content);
-    }
-
-    public function createEntry($data)
     {
         $id              = null;
         $insertStatement = $this->compileInsertStatement($data);
@@ -50,35 +63,8 @@ abstract class Model extends Database
             error_log(__METHOD__ . $e->getMessage());
         }
 
-        $this->content = $this->getSelected(['id' => $id])->content;
-
-        return $this;
-    }
-
-    protected function getSelected($data)
-    {
-        $rows       = null;
-        $properties = $this->compileWhereStatement($data);
-
-        try {
-            $stmt = $this->connection->prepare("
-                SELECT * FROM {$this->table}
-                {$properties}
-            ");
-
-            $results = $stmt->executeQuery();
-            $rows    = $results->fetchAllAssociative();
-        } catch(\Exception $e) {
-            error_log(__METHOD__ . ': ' . $e->getMessage());
-        }
-
-        if(!$rows){
-            return $this;
-        }
-
-        $this->content = $rows;
-
-        $this->setModelProperties($rows);
+        /** @todo Calling find again, too many queries */
+        $this->content = $this->find(['id' => $id])->content;
 
         return $this;
     }
@@ -107,7 +93,7 @@ abstract class Model extends Database
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
 
-        $this->content = $this->getSelected(['id' => $this->id])->content;
+        $this->content = $this->find(['id' => $this->id])->content;
 
         return $this;
     }
@@ -322,5 +308,10 @@ abstract class Model extends Database
     public function isNotEmpty()
     {
         return count($this->content) > 0;
+    }
+
+    public function contains(array $data)
+    {
+        return in_array($data, $this->content);
     }
 }

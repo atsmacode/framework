@@ -3,7 +3,7 @@
 namespace Atsmacode\Framework\Console\Commands;
 
 use Atsmacode\Framework\Database\ConnectionInterface;
-use \Atsmacode\Framework\Migrations\CreateDatabase;
+use Atsmacode\Framework\Migrations\CreateDatabase;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceManager;
 use PDO;
@@ -44,7 +44,7 @@ abstract class Migrator extends Command
 
         $connection = $this->container->get(ConnectionInterface::class);
 
-        foreach($this->buildClasses as $class){
+        foreach ($this->buildClasses as $class ){
             /** @todo Remove reliance on PDO for creating/dropping schema */
             if (CreateDatabase::class === $class) {
                 if ($dev) { $this->container->setFactory(PDO::class, new $this->legacyTestDbFactory); }
