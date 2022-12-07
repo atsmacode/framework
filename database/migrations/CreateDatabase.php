@@ -13,7 +13,6 @@ class CreateDatabase extends Database
 
     public function dropDatabase()
     {
-        var_dump('ccc' .$this->database);
         $sql = "DROP DATABASE IF EXISTS `{$this->database}`";
 
         try {

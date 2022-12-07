@@ -3,8 +3,7 @@
 namespace Atsmacode\Framework\Console\Commands;
 
 use Atsmacode\Framework\Database\ConnectionInterface;
-use Atsmacode\Framework\Migrations\CreateTestTable;
-use Atsmacode\Framework\Migrations\CreateDatabase;
+use \Atsmacode\Framework\Migrations\CreateDatabase;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceManager;
 use PDO;
@@ -13,20 +12,9 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 
-#[AsCommand(
-    name: 'app:build-framework',
-    description: 'Populate the DB with all resources',
-    hidden: false,
-    aliases: ['app:build-framework']
-)]
-
-class BuildEnvironment extends Command
+abstract class Migrator extends Command
 {
-    private $buildClasses = [
-        CreateDatabase::class,
-        CreateTestTable::class
-    ];
-
+    protected array $buildClasses;
     protected static $defaultName = 'app:build-framework';
 
     public function __construct(
