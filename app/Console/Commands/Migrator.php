@@ -15,7 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 abstract class Migrator extends Command
 {
     protected array $buildClasses;
-    protected static $defaultName = 'app:build-framework';
+    protected static $defaultName;
 
     public function __construct(
         string $name = null,
