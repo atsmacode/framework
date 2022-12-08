@@ -2,6 +2,8 @@
 
 namespace Atsmacode\Framework\Console\Commands;
 
+use Atsmacode\Framework\Migrations\CreateDatabase as CreateDatabaseMigration;
+
 #[AsCommand(
     name: 'app:create-database',
     description: 'Create/drop your DB',
@@ -12,7 +14,7 @@ namespace Atsmacode\Framework\Console\Commands;
 class CreateDatabase extends Migrator
 {
     protected array $buildClasses = [
-        CreateDatabase::class
+        CreateDatabaseMigration::class
     ];
 
     protected static $defaultName = 'app:create-database';
