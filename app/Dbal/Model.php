@@ -16,13 +16,24 @@ abstract class Model extends Database
         $properties = $this->compileWhereStatement($data);
 
         try {
-            $stmt = $this->connection->prepare("
-                SELECT * FROM {$this->table}
-                {$properties}
-            ");
+            $queryBuilder = $this->connection->createQueryBuilder();
+            $queryBuilder
+                ->select('*')
+                ->from($this->table)
+                ->where($properties);
 
-            $results = $stmt->executeQuery();
-            $rows    = $results->fetchAllAssociative();
+            var_dump($queryBuilder->getSql());
+
+            $rows = $queryBuilder->executeStatement() ? $queryBuilder->fetchAllAssociative() : [];
+
+            var_dump($rows);
+            // $stmt = $this->connection->prepare("
+            //     SELECT * FROM {$this->table}
+            //     {$properties}
+            // ");
+
+            // $results = $stmt->executeQuery();
+            // $rows    = $results->fetchAllAssociative();
         } catch(\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
@@ -44,19 +55,30 @@ abstract class Model extends Database
         $insertStatement = $this->compileInsertStatement($data);
 
         try {
-            $stmt = $this->connection->prepare($insertStatement);
+            $queryBuilder = $this->connection->createQueryBuilder();
+            $queryBuilder->insert($this->table);
 
-            /*
-             * https://stackoverflow.com/questions/27978175/pdo-bindparam-php-foreach-loop
-             * Link above suggested passing by reference is a must - not sure why,
-             * need further research into the concept. It seemed the last $value
-             * parameter was being set to all the columns without this: &$value
-             */
-            foreach($data as $column => &$value){
-                $stmt->bindParam($column, $value);
+            foreach ($data as $column => $value) {
+                $queryBuilder->setValue($column, $queryBuilder->createNamedParameter($value))
+                    ->setParameter($queryBuilder->createNamedParameter($value), $value);
             }
 
-            $stmt->executeQuery();
+            var_dump($queryBuilder->getSql());
+
+            $queryBuilder->executeStatement();
+            // $stmt = $this->connection->prepare($insertStatement);
+
+            // /*
+            //  * https://stackoverflow.com/questions/27978175/pdo-bindparam-php-foreach-loop
+            //  * Link above suggested passing by reference is a must - not sure why,
+            //  * need further research into the concept. It seemed the last $value
+            //  * parameter was being set to all the columns without this: &$value
+            //  */
+            // foreach($data as $column => &$value){
+            //     $stmt->bindParam($column, $value);
+            // }
+
+            // $stmt->executeQuery();
 
             $id = $this->connection->lastInsertId();
         } catch(\Exception $e) {
@@ -224,7 +246,7 @@ abstract class Model extends Database
 
     private function compileWhereStatement($data)
     {
-        $properties = "WHERE ";
+        $properties = "";
         $pointer    = 1;
 
         foreach($data as $column => $value){

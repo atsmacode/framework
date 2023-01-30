@@ -18,6 +18,8 @@ class TestModelTest extends BaseTest
     {
         $test = $this->testModel->create(['name' => 'Testing...']);
 
+        var_dump($test);
+
         $this->assertEquals($test->id, $this->testModel->find(['id' => $test->id])->id);
     }
 }
