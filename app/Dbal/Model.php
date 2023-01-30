@@ -6,11 +6,10 @@ use Atsmacode\Framework\Database\Database;
 
 abstract class Model extends Database
 {
-    protected $table;
-    public    $content = [];
-    public    $data;
+    protected string $table;
+    public    array  $content = [];
 
-    public function find(array $data = null)
+    public function find(array $data = null): self
     {
         $rows       = null;
         $properties = $this->compileWhereStatement($data);
@@ -38,7 +37,7 @@ abstract class Model extends Database
         return $this;
     }
 
-    public function create(array $data = null)
+    public function create(array $data = null): self
     {
         $id              = null;
         $insertStatement = $this->compileInsertStatement($data);
@@ -69,13 +68,8 @@ abstract class Model extends Database
         return $this;
     }
 
-    /**
-     * To be used to update a single model instance.
-     *
-     * @param array $data
-     * @return void
-     */
-    public function update($data)
+    /** To be used to update a single model instance. */
+    public function update(array $data): self
     {
         $properties = $this->compileUpdateStatement($data);
 
@@ -98,13 +92,8 @@ abstract class Model extends Database
         return $this;
     }
 
-    /**
-     * To be used to update a multiple model instances.
-     *
-     * @param array $data
-     * @return void
-     */
-    public function updateBatch($data, $where = null)
+    /** To be used to update a multiple model instances. */
+    public function updateBatch(array $data, $where = null): self
     {
         $properties = $this->compileUpdateBatchStatement($data, $where);
 
@@ -123,7 +112,7 @@ abstract class Model extends Database
         return $this;
     }
 
-    public function all()
+    public function all(): self
     {
         $rows = null;
 
@@ -150,12 +139,8 @@ abstract class Model extends Database
      * problem from time to time in the other methods.
      * 
      * TODO ^
-     *
-     * @param string $column
-     * @param string $value
-     * @return self
      */
-    public function setValue($column, $value)
+    public function setValue(string $column, string $value): self
     {
         $query = sprintf("
             UPDATE
@@ -180,7 +165,7 @@ abstract class Model extends Database
         }
     }
 
-    private function compileUpdateStatement($data)
+    private function compileUpdateStatement(array $data): string
     {
         $properties = "UPDATE {$this->table} SET ";
         $pointer    = 1;
@@ -201,7 +186,7 @@ abstract class Model extends Database
         return $properties;
     }
 
-    private function compileUpdateBatchStatement($data, $where = null)
+    private function compileUpdateBatchStatement(array $data, $where = null): string
     {
         $properties = "UPDATE {$this->table} SET ";
         $pointer    = 1;
@@ -222,7 +207,7 @@ abstract class Model extends Database
         return $properties;
     }
 
-    private function compileWhereStatement($data)
+    private function compileWhereStatement(array $data): string
     {
         $properties = "WHERE ";
         $pointer    = 1;
@@ -247,7 +232,7 @@ abstract class Model extends Database
         return $properties;
     }
 
-    private function compileInsertStatement($data)
+    private function compileInsertStatement(array $data): string
     {
         $properties = "INSERT INTO {$this->table} (";
         $properties = $this->compileColumns($data, $properties);
@@ -260,7 +245,7 @@ abstract class Model extends Database
         return $properties;
     }
 
-    private function compileColumns($data, $properties)
+    private function compileColumns(array $data, string $properties): string
     {
         $pointer = 1;
 
@@ -278,7 +263,7 @@ abstract class Model extends Database
         return $properties;
     }
 
-    private function compileValues($data, $properties)
+    private function compileValues(array $data, string $properties): string
     {
         $pointer = 1;
         
@@ -296,7 +281,7 @@ abstract class Model extends Database
         return $properties;
     }
 
-    protected function setModelProperties($result)
+    protected function setModelProperties(array $result): void
     {
         if(count($result) === 1){
             foreach (array_shift($result) as $column => $value) {
@@ -305,12 +290,12 @@ abstract class Model extends Database
         }
     }
 
-    public function isNotEmpty()
+    public function isNotEmpty(): bool
     {
         return count($this->content) > 0;
     }
 
-    public function contains(array $data)
+    public function contains(array $data): bool
     {
         return in_array($data, $this->content);
     }

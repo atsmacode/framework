@@ -9,7 +9,7 @@ class Test extends Model
 {
     use Collection;
 
-    public        $table = 'test';
-    public string $name;
-    public int    $id;
+    protected string $table = 'test';
+    public    string $name;
+    public    int    $id;
 }

@@ -11,14 +11,12 @@ use PDOException;
  */
 class Model extends Database
 {
-    protected $table;
-    public $content = [];
-    public $data;
+    protected string $table;
+    public    array  $content = [];
 
     public function __construct(array $data = null)
     {
         parent::__construct($this->configProvider);
-        $this->data = $data;
     }
 
     public static function find(array $data = null)
