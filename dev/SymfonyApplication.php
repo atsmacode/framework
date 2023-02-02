@@ -3,7 +3,6 @@
 require './vendor/autoload.php';
 require './config/container.php';
 
-use Atsmacode\Framework\Console\Commands\BuildEnvironment;
 use Atsmacode\Framework\Console\Commands\ExampleMigrator;
 use Atsmacode\Framework\Database\DbalTestFactory;
 use Atsmacode\Framework\Pdo\PdoTestFactory;

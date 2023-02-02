@@ -45,13 +45,13 @@ abstract class Migrator extends Command
         $connection = $this->container->get(ConnectionInterface::class);
 
         foreach ($this->buildClasses as $class ){
-            /** @todo Remove reliance on PDO for creating/dropping schema */
+            /** @todo Using PDO for drop/create, doctrine always requires a DB name for a connection */
             if (CreateDatabase::class === $class) {
                 if ($dev) { $this->container->setFactory(PDO::class, new $this->legacyTestDbFactory); }
 
-                foreach ($class::$methods as $method) {
-                    (new $class($this->container->get(PDO::class)))->{$method}();
-                }
+                (new CreateDatabase($this->container->get(PDO::class)))
+                    ->dropDatabase()
+                    ->createDatabase();
             } else {
                 foreach ($class::$methods as $method) {
                     (new $class($connection))->{$method}();
