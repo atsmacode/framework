@@ -25,7 +25,7 @@ abstract class Model extends Database
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
 
-        if (!$rows){ return $this; }
+        if (!$rows) { return $this; }
 
         $this->content = $rows;
 
@@ -51,8 +51,21 @@ abstract class Model extends Database
             error_log(__METHOD__ . $e->getMessage());
         }
 
-        /** @todo Calling find again, too many queries */
-        $this->content = $this->find(['id' => $id])->content;
+        // $this->content = $this->find(['id' => $id])->content;
+        $this->content = $this->make(array_merge(['id' => $id], $data))->content;
+
+        return $this;
+    }
+
+    /**
+     * Intended for use with create() so I don't 
+     * have to run the queries in find() again.
+     */
+    public function make(array $data): self
+    {
+        $this->content = $data;
+
+        $this->setModelProperties([$data]);
 
         return $this;
     }
@@ -65,7 +78,7 @@ abstract class Model extends Database
         try {
             $stmt = $this->connection->prepare($properties);
 
-            foreach($data as $column => &$value){
+            foreach ($data as $column => &$value) {
                 if ($value !== null) { $stmt->bindParam(':'.$column, $value); }
             }
 
@@ -120,7 +133,7 @@ abstract class Model extends Database
 
     /**
      * @todo Created this to help with setting NULL values if
-     * required. The condition if($value !== null){ causes
+     * required. The condition if ($value !== null) { causes
      * problem from time to time in the other methods.
      */
     public function setValue(string $column, string $value): self
