@@ -13,5 +13,5 @@ return [
             => Atsmacode\Framework\Pdo\PdoLiveFactory::class,
         Atsmacode\Framework\Models\Test::class
             => Atsmacode\Framework\Models\ModelFactory::class,
-    ]
+    ],
 ];

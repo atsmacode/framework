@@ -10,16 +10,17 @@ class CreateTestTable extends Database
         'createTestTable',
     ];
 
-    public function createTestTable()
+    public function createTestTable(): void
     {
         $sql = "CREATE TABLE test (
                 id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(30) NOT NULL
+                name VARCHAR(30) NOT NULL,
+                test_desc VARCHAR(30) NOT NULL
             )";
 
         try {
             $this->connection->executeQuery($sql);
-        } catch(\PDOException $e) {
+        } catch (\Exception $e) {
             error_log($e->getMessage());
         }
     }

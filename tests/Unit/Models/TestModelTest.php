@@ -13,10 +13,11 @@ class TestModelTest extends BaseTest
 
         $this->testModel = $this->container->get(Test::class);
     }
+    
     /** @test */
     public function itCanCreateAndFindRecord()
     {
-        $test = $this->testModel->create(['name' => 'Testing...']);
+        $test = $this->testModel->create(['name' => 'Test Name', 'test_desc' => 'Test Description.']);
 
         $this->assertEquals($test->id, $this->testModel->find(['id' => $test->id])->id);
     }

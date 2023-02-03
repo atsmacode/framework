@@ -11,26 +11,26 @@ class CreateDatabase extends Database
         'createDatabase'
     ];
 
-    public function dropDatabase()
+    public function dropDatabase(): self
     {
         $sql = "DROP DATABASE IF EXISTS `{$this->database}`";
 
         try {
             $this->connection->exec($sql);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log($e->getMessage());
         }
 
         return $this;
     }
 
-    public function createDatabase()
+    public function createDatabase(): self
     {
         $sql = "CREATE DATABASE `{$this->database}`";
 
         try {
             $this->connection->exec($sql);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log($e->getMessage());
         }
 

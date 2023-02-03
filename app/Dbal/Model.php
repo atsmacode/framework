@@ -16,19 +16,16 @@ abstract class Model extends Database
 
         try {
             $stmt = $this->connection->prepare("
-                SELECT * FROM {$this->table}
-                {$properties}
+                SELECT * FROM {$this->table} {$properties}
             ");
 
             $results = $stmt->executeQuery();
             $rows    = $results->fetchAllAssociative();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
 
-        if(!$rows){
-            return $this;
-        }
+        if (!$rows){ return $this; }
 
         $this->content = $rows;
 
@@ -45,20 +42,12 @@ abstract class Model extends Database
         try {
             $stmt = $this->connection->prepare($insertStatement);
 
-            /*
-             * https://stackoverflow.com/questions/27978175/pdo-bindparam-php-foreach-loop
-             * Link above suggested passing by reference is a must - not sure why,
-             * need further research into the concept. It seemed the last $value
-             * parameter was being set to all the columns without this: &$value
-             */
-            foreach($data as $column => &$value){
-                $stmt->bindParam($column, $value);
-            }
+            foreach ($data as $column => &$value) { $stmt->bindParam($column, $value); }
 
             $stmt->executeQuery();
 
             $id = $this->connection->lastInsertId();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log(__METHOD__ . $e->getMessage());
         }
 
@@ -77,13 +66,11 @@ abstract class Model extends Database
             $stmt = $this->connection->prepare($properties);
 
             foreach($data as $column => &$value){
-                if ($value !== null) { 
-                    $stmt->bindParam(':'.$column, $value);
-                }
+                if ($value !== null) { $stmt->bindParam(':'.$column, $value); }
             }
 
             $stmt->executeQuery();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
 
@@ -100,12 +87,10 @@ abstract class Model extends Database
         try {
             $stmt = $this->connection->prepare($properties);
 
-            foreach($data as $column => &$value){
-                $stmt->bindParam(':'.$column, $value);
-            }
+            foreach ($data as $column => &$value) { $stmt->bindParam(':'.$column, $value); }
 
             $stmt->executeQuery();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
 
@@ -124,7 +109,7 @@ abstract class Model extends Database
             $stmt->executeQuery();
 
             $rows = $stmt->fetchAllAssociative();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
 
@@ -134,11 +119,9 @@ abstract class Model extends Database
     }
 
     /**
-     * Created this to help with setting NULL values if
+     * @todo Created this to help with setting NULL values if
      * required. The condition if($value !== null){ causes
      * problem from time to time in the other methods.
-     * 
-     * TODO ^
      */
     public function setValue(string $column, string $value): self
     {
@@ -160,7 +143,7 @@ abstract class Model extends Database
             $stmt->executeQuery();
 
             return $this;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             error_log(__METHOD__ . ': ' . $e->getMessage());
         }
     }
@@ -170,14 +153,13 @@ abstract class Model extends Database
         $properties = "UPDATE {$this->table} SET ";
         $pointer    = 1;
 
-        foreach($data as $column => $value){
-            if($value !== null){
+        foreach ($data as $column => $value) {
+            if ($value !== null) {
                 $properties .= $column . " = :". $column;
 
-                if($pointer < count($data)){
-                    $properties .= ", ";
-                };
+                if ($pointer < count($data)) { $properties .= ", "; };
             }
+
             $pointer++;
         }
     
@@ -191,12 +173,11 @@ abstract class Model extends Database
         $properties = "UPDATE {$this->table} SET ";
         $pointer    = 1;
 
-        foreach($data as $column => $value){
+        foreach ($data as $column => $value) {
             $properties .= $column . " = :". $column;
 
-            if($pointer < count($data)){
-                $properties .= ", ";
-            };
+            if ($pointer < count($data)) { $properties .= ", "; };
+
             $pointer++;
         };
 
@@ -212,19 +193,17 @@ abstract class Model extends Database
         $properties = "WHERE ";
         $pointer    = 1;
 
-        foreach($data as $column => $value){
+        foreach ($data as $column => $value) {
 
-            if($value === null) {
+            if ($value === null) {
                 $properties .= $column . " IS NULL";
-            } else if(is_int($value)) {
+            } else if (is_int($value)) {
                 $properties .= $column . " = ". $value;
             } else {
                 $properties .= $column . " = '". $value . "'";
             }
 
-            if($pointer < count($data)){
-                $properties .= " AND ";
-            };
+            if ($pointer < count($data)) { $properties .= " AND "; };
 
             $pointer++;
         }
@@ -249,14 +228,11 @@ abstract class Model extends Database
     {
         $pointer = 1;
 
-        foreach(array_keys($data) as $column){
+        foreach (array_keys($data) as $column) {
             $properties .= $column;
 
-            if($pointer < count($data)){
-                $properties .= ", ";
-            } else {
-                $properties .= ") ";
-            };
+            if ($pointer < count($data)) { $properties .= ", "; } else { $properties .= ") "; };
+
             $pointer++;
         }
 
@@ -267,14 +243,11 @@ abstract class Model extends Database
     {
         $pointer = 1;
         
-        foreach(array_keys($data) as $column){
+        foreach (array_keys($data) as $column) {
             $properties .= ':'.$column;
 
-            if($pointer < count($data)){
-                $properties .= ", ";
-            } else {
-                $properties .= ")";
-            };
+            if ($pointer < count($data)) { $properties .= ", "; } else { $properties .= ")"; };
+
             $pointer++;
         }
 
@@ -283,7 +256,7 @@ abstract class Model extends Database
 
     protected function setModelProperties(array $result): void
     {
-        if(count($result) === 1){
+        if (count($result) === 1) {
             foreach (array_shift($result) as $column => $value) {
                 $this->{$column} = $value;
             }
