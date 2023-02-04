@@ -281,8 +281,10 @@ abstract class Model extends Database
     {
         if (count($result) === 1) {
             foreach (array_shift($result) as $column => $value) {
-                $property = $this->reflection->getProperty($column);
-                $property->setValue($this, $value);
+                if ($this->reflection->hasProperty($column)) {
+                    $property = $this->reflection->getProperty($column);
+                    $property->setValue($this, $value);
+                }
             }
         }
     }
