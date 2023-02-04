@@ -10,7 +10,6 @@ class Test extends Model
     use Collection;
 
     protected string $table = 'test';
-    private int      $id;
     private string   $name;
     private string   $test_desc;
 
