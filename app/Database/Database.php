@@ -2,11 +2,14 @@
 
 namespace Atsmacode\Framework\Database;
 
+use ReflectionClass;
+
 class Database
 {
+    protected mixed  $connection;
     protected string $database;
 
-    public function __construct(ConnectionInterface $connection, array $data = null)
+    public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection->getConnection();
         $this->database   = $connection->getDatabaseName();

@@ -7,6 +7,8 @@ use Atsmacode\Framework\Models\Test;
 
 class TestModelTest extends BaseTest
 {
+    private Test $testModel;
+    
     protected function setUp(): void
     {
         parent::setUp();
@@ -19,6 +21,9 @@ class TestModelTest extends BaseTest
     {
         $test = $this->testModel->create(['name' => 'Test Name', 'test_desc' => 'Test Description.']);
 
-        $this->assertEquals($test->id, $this->testModel->find(['id' => $test->id])->id);
+        $this->assertEquals(
+            $test->getId(), 
+            $this->testModel->find(['id' => $test->getId()])->getId()
+        );
     }
 }

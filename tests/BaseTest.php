@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 
 abstract class BaseTest extends TestCase
 {
+    protected ServiceManager $container;
+
     protected function setUp(): void
     {
         parent::setUp();

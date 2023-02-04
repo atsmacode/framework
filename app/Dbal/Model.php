@@ -2,12 +2,21 @@
 
 namespace Atsmacode\Framework\Dbal;
 
+use Atsmacode\Framework\Database\ConnectionInterface;
 use Atsmacode\Framework\Database\Database;
 
 abstract class Model extends Database
 {
-    protected string $table;
-    public    array  $content = [];
+    private \ReflectionClass $reflection;
+    protected string         $table;
+    protected array          $content = [];
+
+    public function __construct(ConnectionInterface $connection, \ReflectionClass $reflection)
+    {
+        parent::__construct($connection);
+
+        $this->reflection = $reflection;
+    }
 
     public function find(array $data = null): self
     {
@@ -267,11 +276,13 @@ abstract class Model extends Database
         return $properties;
     }
 
+    /** Uses reflection to set private properties of child Model class */
     protected function setModelProperties(array $result): void
     {
         if (count($result) === 1) {
             foreach (array_shift($result) as $column => $value) {
-                $this->{$column} = $value;
+                $property = $this->reflection->getProperty($column);
+                $property->setValue($this, $value);
             }
         }
     }
@@ -284,5 +295,10 @@ abstract class Model extends Database
     public function contains(array $data): bool
     {
         return in_array($data, $this->content);
+    }
+    
+    public function getContent(): array
+    {
+        return $this->content;
     }
 }
