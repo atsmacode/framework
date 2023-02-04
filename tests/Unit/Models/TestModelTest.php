@@ -26,4 +26,14 @@ class TestModelTest extends BaseTest
             $this->testModel->find(['id' => $test->getId()])->getId()
         );
     }
+
+    /** @test */
+    public function contentCanBeSet()
+    {
+        $test = $this->testModel->create(['name' => 'Test Name', 'test_desc' => 'Test Description.']);
+
+        $test->setContent([]);
+
+        $this->assertEquals([], $test->getContent());
+    }
 }

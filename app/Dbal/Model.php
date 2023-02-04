@@ -296,6 +296,11 @@ abstract class Model extends Database
     {
         return in_array($data, $this->content);
     }
+
+    public function setContent(array $content): void
+    {
+        $this->content = $content;
+    }
     
     public function getContent(): array
     {
