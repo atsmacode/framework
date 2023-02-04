@@ -9,6 +9,7 @@ abstract class Model extends Database
 {
     private \ReflectionClass $reflection;
     protected string         $table;
+    protected int            $id;
     protected array          $content = [];
 
     public function __construct(ConnectionInterface $connection, \ReflectionClass $reflection)
@@ -16,6 +17,21 @@ abstract class Model extends Database
         parent::__construct($connection);
 
         $this->reflection = $reflection;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setContent(array $content): void
+    {
+        $this->content = $content;
+    }
+
+    public function getContent(): array
+    {
+        return $this->content;
     }
 
     public function find(array $data = null): self
@@ -297,15 +313,5 @@ abstract class Model extends Database
     public function contains(array $data): bool
     {
         return in_array($data, $this->content);
-    }
-
-    public function setContent(array $content): void
-    {
-        $this->content = $content;
-    }
-    
-    public function getContent(): array
-    {
-        return $this->content;
     }
 }
