@@ -6,7 +6,6 @@ use Atsmacode\Framework\Database\ConnectionInterface;
 use Atsmacode\Framework\Dbal\Model;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Container\ContainerInterface;
-use ReflectionClass;
 
 class ModelFactory implements FactoryInterface
 {
@@ -14,6 +13,6 @@ class ModelFactory implements FactoryInterface
     {
         $connection = $container->get(ConnectionInterface::class);
 
-        return new $requestedName($connection, new ReflectionClass($requestedName));
+        return new $requestedName($connection, new \ReflectionClass($requestedName));
     }
 }

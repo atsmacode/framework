@@ -57,6 +57,11 @@ abstract class Model extends Database
         $this->setModelProperties($rows);
 
         return $this;
+
+        /** 
+         * @todo Would like to return $this->build($rows)
+         * here. Caused a lot of failing unit tests.
+         */
     }
 
     public function create(array $data = null): self
@@ -76,17 +81,10 @@ abstract class Model extends Database
             error_log(__METHOD__ . $e->getMessage());
         }
 
-        // $this->content = $this->find(['id' => $id])->content;
-        $this->content = $this->make(array_merge(['id' => $id], $data))->content;
-
-        return $this;
+        return $this->build(array_merge(['id' => $id], $data));
     }
 
-    /**
-     * Intended for use with create() so I don't 
-     * have to run the queries in find() again.
-     */
-    public function make(array $data): self
+    public function build(array $data): self
     {
         $this->content = $data;
 
@@ -163,7 +161,7 @@ abstract class Model extends Database
      */
     public function setValue(string $column, string $value): self
     {
-        $query = sprintf("
+        $query = "
             UPDATE
                 {$this->table}
             SET
@@ -172,7 +170,7 @@ abstract class Model extends Database
                 {$this->table}.id = :id
             LIMIT
                 1
-        ");
+        ";
 
         try {
             $stmt = $this->connection->prepare($query);
@@ -219,9 +217,7 @@ abstract class Model extends Database
             $pointer++;
         };
 
-        if ($where) {
-            $properties .= " WHERE {$where}";
-        }
+        if ($where) { $properties .= " WHERE {$where}"; }
 
         return $properties;
     }
@@ -232,7 +228,6 @@ abstract class Model extends Database
         $pointer    = 1;
 
         foreach ($data as $column => $value) {
-
             if ($value === null) {
                 $properties .= $column . " IS NULL";
             } else if (is_int($value)) {
