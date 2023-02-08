@@ -12,11 +12,13 @@ class CreateTestTable extends Database
 
     public function createTestTable(): void
     {
-        $sql = "CREATE TABLE test (
-                id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(30) NOT NULL,
-                test_desc VARCHAR(30) NOT NULL
-            )";
+        $sql = '
+                CREATE TABLE test (
+                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(30) NOT NULL,
+                    test_desc VARCHAR(30) NOT NULL
+                )
+            ';
 
         try {
             $this->connection->executeQuery($sql);
