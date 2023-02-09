@@ -54,15 +54,15 @@ return [
         'db' => [
             'live' => [
                 'servername' => 'localhost',
-                'username'   => 'dev',
-                'password'   => 'PASSWORD',
+                'username'   => 'DB_USER',
+                'password'   => 'DB_PASSWORD',
                 'database'   => 'framework',
                 'driver'     => 'pdo_mysql',
             ],
             'test' => [
                 'servername' => 'localhost',
-                'username'   => 'dev',
-                'password'   => 'PASSWORD',
+                'username'   => 'DB_USER',
+                'password'   => 'DB_PASSWORD',
                 'database'   => 'framework_test',
                 'driver'     => 'pdo_mysql',
             ],
