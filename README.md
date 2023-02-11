@@ -1,3 +1,15 @@
+# About
+
+I created this repository to provide some basic resources for use in other packages I've been working on. 
+
+It essentially consists of the following:
+
+ - Commands for migrations
+ - Container based database connections
+ - Model classes
+
+This is intended for my own personal use.
+
 # Environment
 
 ## PHP
@@ -31,6 +43,8 @@ You can use the base Migrator to migrate any set of classes. The CreateDatabase 
 In the ExampleMigrator, a Laminas\ServiceManager\ServiceManager is passed into the constructor. It has a DB connection set in the dependency map using app/FrameworkConfigProvider.php.
 
 The base app/Console/Commands/Migrator.php looks for the Atsmacode\Framework\Database\ConnectionInterface and uses the given DB credentials for all migrations.
+
+This interface is also used for the Model DB connections throughout a request lifecycle.
 
 You can then run a command like so (-d true is for the 'test' DB credentials in the config array, remove this for 'live' DB):
 
