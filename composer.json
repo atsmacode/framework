@@ -26,6 +26,7 @@
         "doctrine/dbal": "^3.5",
         "laminas/laminas-config-aggregator": "^1.12",
         "symfony/console": "^6.0",
-        "laminas/laminas-servicemanager": "^3.19"
+        "laminas/laminas-servicemanager": "^3.19",
+        "monolog/monolog": "^3.3"
     }
 }

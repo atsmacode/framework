@@ -4,6 +4,7 @@ namespace Atsmacode\Framework\Dbal;
 
 use Atsmacode\Framework\Database\ConnectionInterface;
 use Atsmacode\Framework\Database\Database;
+use Psr\Log\LoggerInterface;
 
 abstract class Model extends Database
 {
@@ -12,9 +13,12 @@ abstract class Model extends Database
     protected int            $id;
     protected array          $content = [];
 
-    public function __construct(ConnectionInterface $connection, \ReflectionClass $reflection)
-    {
-        parent::__construct($connection);
+    public function __construct(
+        ConnectionInterface $connection,
+        LoggerInterface $logger,
+        \ReflectionClass $reflection
+    ) {
+        parent::__construct($connection, $logger);
 
         $this->reflection = $reflection;
     }
