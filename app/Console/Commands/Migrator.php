@@ -19,10 +19,10 @@ abstract class Migrator extends Command
     protected static $defaultName;
 
     public function __construct(
-        string $name = null,
-        ServiceManager $container,
-        FactoryInterface $testDbFactory,
-        FactoryInterface $legacyTestDbFactory
+        ?string $name,
+        private ServiceManager $container,
+        private FactoryInterface $testDbFactory,
+        private FactoryInterface $legacyTestDbFactory
     ) {
         parent::__construct($name);
 
