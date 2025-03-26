@@ -10,7 +10,7 @@ abstract class Model extends Database
 {
     private \ReflectionClass $reflection;
     protected string         $table;
-    protected ?int           $id;
+    protected int            $id;
     protected array          $content = [];
 
     public function __construct(
