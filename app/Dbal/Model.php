@@ -23,7 +23,7 @@ abstract class Model extends Database
         $this->reflection = $reflection;
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
